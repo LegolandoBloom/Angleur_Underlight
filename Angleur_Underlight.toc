@@ -1,0 +1,15 @@
+## Interface: 110105
+## Title: Angleur_Underlight
+## Notes: Plugin to Angleur, automatically swap your Underlight Angler with your main fishing rod when you start swimming!
+## Version: 0.5
+## Author: LegolandoBloom
+## SavedVariables: 
+## SavedVariablesPerCharacter: AngleurUnderlight_MainFishingRod
+## RequiredDeps: Angleur
+## IconTexture: Interface\AddOns\Angleur_Underlight\images\iconmini.png
+## X-Curse-Project-ID: 1274741
+
+# angTemplates\embeds.xml
+equipMan.lua
+Angleur_Underlight.lua
+Angleur_Underlight.xml
