@@ -1,3 +1,7 @@
+local T = AngleurUnderlight_Translate
+local colorUnderlight = CreateColor(0.9, 0.8, 0.5)
+local colorYello = CreateColor(1.0, 0.82, 0.0)
+
 AngleurUnderlight_MainFishingRod = {
     name = nil,
     link = nil,
@@ -5,26 +9,24 @@ AngleurUnderlight_MainFishingRod = {
     icon = nil
 }
 local queue = AngleurUnderlight_Queue
-
 local UNDERLIGHT = 133755
 
-local colorUnderlight = CreateColor(0.9, 0.8, 0.5)
-local colorYello = CreateColor(1.0, 0.82, 0.0)
+local angLoaded = AngleurUnderlight_AngLoaded
 
 function AngleurUnderlight_UpdateButton(self)
     if AngleurUnderlight_MainFishingRod.name then
         self.icon:SetTexture(AngleurUnderlight_MainFishingRod.icon)
         self.closeButton:Show()
-            self.tooltipTitle = AngleurUnderlight_MainFishingRod.link .. "\nset as Main Fishing Rod."
-            self.tooltipText = "\nWhen you start swimming, the " .. colorUnderlight:WrapTextInColorCode("Underlight Angler ") .. " will be " 
-            .. "equipped to trigger the buff.\n\nWhen you stop swimming, your main fishing rod will be re-equipped"
+            self.tooltipTitle = AngleurUnderlight_MainFishingRod.link .. T["\nset as Main Fishing Rod."]
+            self.tooltipText = T["\nWhen you start swimming, the " .. colorUnderlight:WrapTextInColorCode("Underlight Angler ") .. " will be " 
+            .. "equipped to trigger the buff.\n\nWhen you stop swimming, your main fishing rod will be re-equipped"]
     else
         self.closeButton:Hide()
         self.icon:SetTexture()
-        self.tooltipTitle = "No main fishing rod set"
-        self.tooltipText = "\nYour " .. colorUnderlight:WrapTextInColorCode("Underlight Angler ") 
+        self.tooltipTitle = T["No main fishing rod set"]
+        self.tooltipText = T["\nYour " .. colorUnderlight:WrapTextInColorCode("Underlight Angler ") 
         .. "will be swapped in and out to keep the buff active when you start/stop swimming.\n\n" 
-        .. colorYello:WrapTextInColorCode("Drag ") .. "a fishing rod here to set it as main."
+        .. colorYello:WrapTextInColorCode("Drag ") .. "a fishing rod here to set it as main."]
     end
 end
 
@@ -41,23 +43,33 @@ function AngleurUnderlight_GrabFishingRod(self)
     Angleur_BetaPrint("I wonder if this is a fishing rod.")
     if InCombatLockdown() then
         ClearCursor()
-        print("Can't drag item in combat.")
+        print(T["Can't drag item in combat."])
         return
     end
     local itemLoc = C_Cursor.GetCursorItem()
     local itemID = C_Item.GetItemID(itemLoc)
     if not C_Item.IsEquippableItem(itemID) then
-        print("Not an equippable item. Please drag in your main fishing rod.")
+        print(T["Not an equippable item. Please drag in your main fishing rod."])
+        ClearCursor()
         return
     end
     local profession = C_TradeSkillUI.GetProfessionForCursorItem()
     if profession ~= 10 then
-        print("Not a fishing rod. Please drag in your main fishing rod.")
+        print(T["Not a fishing rod. Please drag in your main fishing rod."])
+        ClearCursor()
         return
     end
     local itemInfo = {C_Item.GetItemInfo(itemID)}
     if itemInfo[9] ~= "INVTYPE_PROFESSION_TOOL" then
-        print("Item is equippable and fishing related, but not a fishing rod. Please drag in your main fishing rod.")
+        print(T["Item is equippable and fishing related, but not a fishing rod. Please drag in your main fishing rod."])
+        ClearCursor()
+        return
+    end
+    if itemID == UNDERLIGHT then
+        print(colorUnderlight:WrapTextInColorCode("Angleur_Underlight: ") .. T[" the draggable item slot is reserved fishing rods that are NOT the " 
+        .. colorUnderlight:WrapTextInColorCode("Underlight Angler. ") .. "If you would like to use the Underlight Angler as your \'Main\' fishing rod, " 
+        .. "you can keep the box empty."])
+        ClearCursor()
         return
     end
     AngleurUnderlight_MainFishingRod.name = itemInfo[1]
@@ -65,18 +77,36 @@ function AngleurUnderlight_GrabFishingRod(self)
     AngleurUnderlight_MainFishingRod.itemID = itemID
     AngleurUnderlight_MainFishingRod.icon = itemInfo[10]
     AngleurUnderlight_UpdateButton(self)
+    ClearCursor()
 end
 -- /dump IsSwimming("player")
 -- /dump IsSubmerged("player")
 -- /dump C_PlayerInfo.GetGlidingInfo()
+
 function AngleurUnderlight_OnLoad(self)
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
     self:SetScript("OnEvent", AngleurUnderlight_EventLoader)
+    if angLoaded then
+        self:SetParent(Angleur_ConfigPanel)
+        self:SetPoint("TOPLEFT", Angleur_ConfigPanel, "TOPRIGHT", 0, -30)
+    else
+        self:SetParent(Angleur_Underlight_NoAngleurFrame)
+        self:SetPoint("TOPLEFT", Angleur_Underlight_NoAngleurFrame, "TOPLEFT", 11, -33)
+    end
 end
 
 function AngleurUnderlight_EventLoader(self, event, unit, ...)
     if event == "PLAYER_ENTERING_WORLD" then
         AngleurUnderlight_UpdateButton(self)
+        if not AngleurUnderlight_FirstInstall then
+            self.firstInstall:Show()
+            if angLoaded then
+                Angleur_ConfigPanel:Show()
+            else
+                Angleur_Underlight_NoAngleurFrame:Show()
+            end
+            AngleurUnderlight_FirstInstall = true
+        end
     end
 end
 
@@ -92,7 +122,10 @@ local function checkReEquip()
     local mainRod = AngleurUnderlight_MainFishingRod.itemID
     if not mainRod then return end
     if not isEligible(mainRod) then 
-        print("The main fishing rod not found in bags. Cannot swap.")
+        print(T["The main fishing rod not found in bags. Cannot swap."])
+        if not angLoaded then
+            print(colorYello:WrapTextInColorCode("/undang") .. T[" to open up the configuration if you'd like to change/remove the main fishing rod."])
+        end
         return 
     end
     local mainRodEquipped = C_Item.IsEquippedItem(mainRod)
@@ -108,7 +141,7 @@ end
 local function checkEquip()
     if InCombatLockdown() then return false end
     if not isEligible(UNDERLIGHT) then 
-        print("Underlight Angler not found in bags. Cannot equip.")
+        print(T["Underlight Angler not found in bags. Cannot equip."])
         return
     end
     local fishingAura = C_UnitAuras.GetPlayerAuraBySpellID(394009)
@@ -193,4 +226,7 @@ eventFrame:RegisterEvent("MIRROR_TIMER_START")
 eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 eventFrame:SetScript("OnEvent", AngleurUnderlight_Events)
+
+
+
 

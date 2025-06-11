@@ -4,6 +4,7 @@ AngleurUnderlight_Queue = {
 }
 local queue = AngleurUnderlight_Queue
 
+local angLoaded = AngleurUnderlight_AngLoaded
 
 local function isEligible(itemID)
     if not C_Item.IsEquippableItem(itemID) then return false end
@@ -114,8 +115,10 @@ function AngleurUnderlight_HandleQueue()
                 equipRod()
             else
                 Angleur_BetaPrint("table empty, removing script")
-                if AngleurCharacter.sleeping == true and not IsSwimming() then
-                    Angleur_FishingForAttentionAura()
+                if angLoaded then
+                    if AngleurCharacter.sleeping == true and not IsSwimming() then
+                        Angleur_FishingForAttentionAura()
+                    end
                 end
                 self:SetScript("OnUpdate", nil)
             end
@@ -123,30 +126,30 @@ function AngleurUnderlight_HandleQueue()
     end
 end
 
-SLASH_ANGLEURUNDERLIGHTTEST1 = "/undang1"
-SlashCmdList["ANGLEURUNDERLIGHTTEST"] = function() 
-    queue.unequip = true
-    queue.equip = 133755
-    AngleurUnderlight_HandleQueue()
-end
+-- SLASH_ANGLEURUNDERLIGHTTEST1 = "/undang1"
+-- SlashCmdList["ANGLEURUNDERLIGHTTEST"] = function() 
+--     queue.unequip = true
+--     queue.equip = 133755
+--     AngleurUnderlight_HandleQueue()
+-- end
 
-SLASH_ANGLEURUNDERLIGHTTESTO1 = "/undang2"
-SlashCmdList["ANGLEURUNDERLIGHTTESTO"] = function() 
-    queue.unequip = false
-    queue.equip = 133755
-    AngleurUnderlight_HandleQueue()
-end
+-- SLASH_ANGLEURUNDERLIGHTTESTO1 = "/undang2"
+-- SlashCmdList["ANGLEURUNDERLIGHTTESTO"] = function() 
+--     queue.unequip = false
+--     queue.equip = 133755
+--     AngleurUnderlight_HandleQueue()
+-- end
 
-SLASH_ANGLEURUNDERLIGHTTESTOO1 = "/undang3"
-SlashCmdList["ANGLEURUNDERLIGHTTESTOO"] = function() 
-    queue.unequip = true
-    queue.equip = 198226
-    AngleurUnderlight_HandleQueue()
-end
+-- SLASH_ANGLEURUNDERLIGHTTESTOO1 = "/undang3"
+-- SlashCmdList["ANGLEURUNDERLIGHTTESTOO"] = function() 
+--     queue.unequip = true
+--     queue.equip = 198226
+--     AngleurUnderlight_HandleQueue()
+-- end
 
-SLASH_ANGLEURUNDERLIGHTTESTOOO1 = "/undang4"
-SlashCmdList["ANGLEURUNDERLIGHTTESTOOO"] = function() 
-    queue.unequip = false
-    queue.equip = 198226
-    AngleurUnderlight_HandleQueue()
-end
+-- SLASH_ANGLEURUNDERLIGHTTESTOOO1 = "/undang4"
+-- SlashCmdList["ANGLEURUNDERLIGHTTESTOOO"] = function() 
+--     queue.unequip = false
+--     queue.equip = 198226
+--     AngleurUnderlight_HandleQueue()
+-- end
