@@ -40,5 +40,5 @@ T[colorWhite:WrapTextInColorCode("Get ") .. colorBlu:WrapTextInColorCode("Angleu
 .. colorWhite:WrapTextInColorCode("for increased functionality!")] = colorWhite:WrapTextInColorCode("Get ") .. colorBlu:WrapTextInColorCode("Angleur ") 
 .. colorWhite:WrapTextInColorCode("for increased functionality!")
 
-T["to re-open this window."] = "to re-open this window."
+T["to re-open this window."] = "to\nre-open this\nwindow."
 

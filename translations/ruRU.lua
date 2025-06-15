@@ -41,6 +41,6 @@ T["Underlight Angler not found in bags. Cannot equip."] = "Удочка Темн
 
 T[colorWhite:WrapTextInColorCode("Get ") .. colorBlu:WrapTextInColorCode("Angleur ") 
 .. colorWhite:WrapTextInColorCode("for increased functionality!")] = colorWhite:WrapTextInColorCode("Получите ") .. colorBlu:WrapTextInColorCode("Angleur ") 
-.. colorWhite:WrapTextInColorCode("для расширенной функциональности!")
+.. colorWhite:WrapTextInColorCode("для расширенной Функциональ-\nности!")
 
-T["to re-open this window."] = "чтобы повторно открыть это окно."
+T["to re-open this window."] = "чтобы\nповторно открыть это окно."

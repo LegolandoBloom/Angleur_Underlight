@@ -12,14 +12,14 @@
         </Anchors>
         <Layers>
             <Layer level="ARTWORK">
-                <FontString name="$parent_MainText" parentKey="mainText" justifyH="LEFT" inherits="GameFontNormal">
-                    <Size x="80"/>
+                <FontString name="$parent_MainText" parentKey="mainText" justifyH="LEFT" justifyV="TOP" inherits="GameFontNormal">
+                    <Size x="90"/>
                     <Anchors>
                         <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="13" y="-34"/> 
                     </Anchors>
                 </FontString>
-                <FontString name="$parent_SmallerText" parentKey="smallerText" justifyH="LEFT" inherits="SystemFont_Shadow_Small">
-                    <Size x="80"/>
+                <FontString name="$parent_SmallerText" parentKey="smallerText" justifyH="LEFT" justifyV="TOP" inherits="SystemFont_Shadow_Small">
+                    <Size x="135"/>
                     <Anchors>
                         <Anchor point="TOPLEFT" relativeTo="$parent_MainText" relativePoint="BOTTOMLEFT" x="0" y="-5"/> 
                     </Anchors>

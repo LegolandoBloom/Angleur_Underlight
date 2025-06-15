@@ -110,7 +110,7 @@ function AngleurUnderlight_OnLoad(self)
         self:SetPoint("TOPLEFT", Angleur_ConfigPanel, "TOPRIGHT", 0, -30)
     else
         self:SetParent(Angleur_Underlight_NoAngleurFrame)
-        self:SetPoint("TOPRIGHT", Angleur_Underlight_NoAngleurFrame, "TOPRIGHT", -38, -36)
+        self:SetPoint("TOPRIGHT", Angleur_Underlight_NoAngleurFrame, "TOPRIGHT", -32, -36)
     end
 end
 
