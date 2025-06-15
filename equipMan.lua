@@ -116,8 +116,10 @@ function AngleurUnderlight_HandleQueue()
             else
                 Angleur_BetaPrint("table empty, removing script")
                 if angLoaded then
-                    if AngleurCharacter.sleeping == true and not IsSwimming() then
-                        Angleur_FishingForAttentionAura()
+                    if AngleurCharacter.sleeping == true and not IsSwimming() and AngleurUnderlightConfig.waterwalking == false then
+                        if AngleurUnderlight_CheckDelve() == false then
+                            Angleur_FishingForAttentionAura()
+                        end
                     end
                 end
                 self:SetScript("OnUpdate", nil)

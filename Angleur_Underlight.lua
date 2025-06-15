@@ -8,20 +8,38 @@ AngleurUnderlight_MainFishingRod = {
     itemID = nil,
     icon = nil
 }
+
+AngleurUnderlightConfig = {
+    waterwalking = false,
+    delveMode = false
+}
+
 local queue = AngleurUnderlight_Queue
 local UNDERLIGHT = 133755
-
 local angLoaded = AngleurUnderlight_AngLoaded
+
+function AngleurUnderlight_SavedVariables()
+    if not AngleurUnderlightConfig then
+        AngleurUnderlightConfig = {}
+    end
+    if AngleurUnderlightConfig.waterwalking == nil then
+        AngleurUnderlightConfig.waterwalking = false
+    end
+
+    if AngleurUnderlightConfig.delveMode == nil then
+        AngleurUnderlightConfig.delveMode = false
+    end
+end
 
 function AngleurUnderlight_UpdateButton(self)
     if AngleurUnderlight_MainFishingRod.name then
         self.icon:SetTexture(AngleurUnderlight_MainFishingRod.icon)
-        self.closeButton:Show()
+        self.removeRod:Show()
             self.tooltipTitle = AngleurUnderlight_MainFishingRod.link .. T["\nset as Main Fishing Rod."]
             self.tooltipText = T["\nWhen you start swimming, the " .. colorUnderlight:WrapTextInColorCode("Underlight Angler ") .. " will be " 
             .. "equipped to trigger the buff.\n\nWhen you stop swimming, your main fishing rod will be re-equipped"]
     else
-        self.closeButton:Hide()
+        self.removeRod:Hide()
         self.icon:SetTexture()
         self.tooltipTitle = T["No main fishing rod set"]
         self.tooltipText = T["\nYour " .. colorUnderlight:WrapTextInColorCode("Underlight Angler ") 
@@ -85,18 +103,23 @@ end
 
 function AngleurUnderlight_OnLoad(self)
     self:RegisterEvent("PLAYER_ENTERING_WORLD")
+    self:RegisterEvent("ADDON_LOADED")
     self:SetScript("OnEvent", AngleurUnderlight_EventLoader)
     if angLoaded then
         self:SetParent(Angleur_ConfigPanel)
         self:SetPoint("TOPLEFT", Angleur_ConfigPanel, "TOPRIGHT", 0, -30)
     else
         self:SetParent(Angleur_Underlight_NoAngleurFrame)
-        self:SetPoint("TOPLEFT", Angleur_Underlight_NoAngleurFrame, "TOPLEFT", 11, -33)
+        self:SetPoint("TOPRIGHT", Angleur_Underlight_NoAngleurFrame, "TOPRIGHT", -38, -36)
     end
 end
 
 function AngleurUnderlight_EventLoader(self, event, unit, ...)
-    if event == "PLAYER_ENTERING_WORLD" then
+    if event == "ADDON_LOADED" then
+    elseif event == "PLAYER_ENTERING_WORLD" then
+        AngleurUnderlight_SavedVariables()
+        AngleurUnderlight_CollapseConfig.savedVarTable = AngleurUnderlightConfig
+        AngleurUnderlight_CollapseConfig:Update()
         AngleurUnderlight_UpdateButton(self)
         if not AngleurUnderlight_FirstInstall then
             self.firstInstall:Show()
@@ -117,6 +140,13 @@ local function isEligible(itemID)
     end
     return true
 end
+local function checkWaterwalking()
+    if not angLoaded then return false end
+    if AngleurUnderlightConfig.waterwalking == false then return false end
+    if AngleurCharacter.sleeping == false then return false end
+    -- true if they have angleur, it is on sleep mode, and they have checked the waterwalking checkbox
+    return true
+end
 local function checkReEquip()
     if InCombatLockdown() then return false end
     local mainRod = AngleurUnderlight_MainFishingRod.itemID
@@ -128,6 +158,11 @@ local function checkReEquip()
         end
         return 
     end
+    if checkWaterwalking() == true then
+        --skip the unequip so the waterwalking buff stays
+        return
+    end
+
     local mainRodEquipped = C_Item.IsEquippedItem(mainRod)
     if mainRodEquipped then
         -- do nothing
@@ -168,10 +203,18 @@ local function checkEquip()
     end
 end
     
-    
+local inDelve = false
 local wasSwimming = false
 local swimdelayFrame = CreateFrame("Frame")
 swimdelayFrame:Show()
+local function checkSwimOrBreath()
+    if IsSwimming() then
+        return true
+    elseif AngleurUnderlightConfig.delveMode == true and GetMirrorTimerProgress("BREATH") ~= 0 then
+        return true
+    end
+    return false
+end
 function AngleurUnderlight_Events(self, event, unit)
     if event == "PLAYER_REGEN_DISABLED" then
         queue.unequip = false
@@ -179,7 +222,7 @@ function AngleurUnderlight_Events(self, event, unit)
         AngleurUnderlight_HandleQueue()
     elseif event == "PLAYER_REGEN_ENABLED" then
         -- need to delay after exiting combat a little bit otherwise the fish form doesn't trigger
-        if IsSwimming() then
+        if checkSwimOrBreath() then
             wasSwimming = true
             checkEquip()
         elseif wasSwimming == true then
@@ -190,29 +233,38 @@ function AngleurUnderlight_Events(self, event, unit)
         -- No need to check for it all when in combat, + "wasSwimming" needs to stay unchanged during combat
         if InCombatLockdown() then return end
         Angleur_SingleDelayer(1, 0, 0.2, swimdelayFrame, function()
-            if IsSwimming() then
+            if checkSwimOrBreath() then
                 wasSwimming = true
                 Angleur_BetaPrint("swimming start")
                 checkEquip()
                 return true
             else
                 if wasSwimming == true then
-                    wasSwimming = false
-                    Angleur_BetaPrint("was swimming")
-                    checkReEquip()
+                    if AngleurUnderlight_CheckDelve() == true then
+                        -- do nothing
+                    else
+                        wasSwimming = false
+                        Angleur_BetaPrint("was swimming")
+                        checkReEquip()
+                    end
                 end
             end
         end,
         function()
-            if IsSwimming() then
+            if checkSwimOrBreath() then
                 wasSwimming = true
                 Angleur_BetaPrint("swimming started")
                 checkEquip()
             else
                 if wasSwimming == true then
-                    wasSwimming = false
-                    Angleur_BetaPrint("was swimming")
-                    checkReEquip()
+                    local inInstance, instanceType = IsInInstance()
+                    if AngleurUnderlight_CheckDelve() == true then
+                        -- do nothing
+                    else
+                        wasSwimming = false
+                        Angleur_BetaPrint("was swimming")
+                        checkReEquip()
+                    end
                 end
                 Angleur_BetaPrint("player is not swimming, but also wasn't swimming before")
             end
@@ -228,5 +280,11 @@ eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 eventFrame:SetScript("OnEvent", AngleurUnderlight_Events)
 
 
-
+function AngleurUnderlight_CheckDelve()
+    if not AngleurUnderlightConfig.delveMode then return false end 
+    local inInstance, instanceType = IsInInstance()
+    if not inInstance or instanceType ~= "scenario" then return false end
+    Angleur_BetaPrint("Inside delve, and using breath mode. Don't unequip.")
+    return true
+end
 
