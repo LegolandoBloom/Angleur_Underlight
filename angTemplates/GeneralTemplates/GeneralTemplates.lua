@@ -39,7 +39,6 @@ function AngleurUnderlight_CheckboxMixin:OnClick()
     elseif self:GetChecked() == false then
         teeburu[self.reference] = false
     end
-    DevTools_Dump(teeburu)
 end
 
 AngleurUnderlight_CollapseConfigMixin = {}
