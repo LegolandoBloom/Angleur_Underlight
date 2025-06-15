@@ -98,12 +98,21 @@ function AngleurUnderlight_HandleQueue()
     if queue.unequip == false and queue.equip == nil then
         equipFrame:SetScript("OnUpdate", nil)
     else
+        local delay = 8
         equipFrame:SetScript("OnUpdate", function(self, elapsed)
             erapusuCounter = erapusuCounter + elapsed
             if erapusuCounter < erapusuThreshold then
                 return
             end
+            delay = delay - erapusuCounter
             erapusuCounter = 0
+            if delay <= 0 then
+                queue.unequip = false
+                queue.equip = nil
+                self:SetScript("OnUpdate", nil)
+                print("Angleur_Underlight: Timed out.")
+                print("If this happens too often, please let the author know.")
+            end
             if InCombatLockdown() then
                 queue.unequip = false
                 queue.equip = nil

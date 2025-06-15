@@ -279,7 +279,6 @@ eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 eventFrame:SetScript("OnEvent", AngleurUnderlight_Events)
 
-
 function AngleurUnderlight_CheckDelve()
     if not AngleurUnderlightConfig.delveMode then return false end 
     local inInstance, instanceType = IsInInstance()
@@ -288,3 +287,6 @@ function AngleurUnderlight_CheckDelve()
     return true
 end
 
+function AngleurUnderlight_AngleurWakeUpPing()
+    checkReEquip()
+end
