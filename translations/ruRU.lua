@@ -68,7 +68,7 @@ T["While " .. colorBlu:WrapTextInColorCode("Angleur ") .. "is " .. colorGrae:Wra
 .. colorYello:WrapTextInColorCode("разбудите ") .. colorBlu:WrapTextInColorCode("Angleur ") .. ", ваша \'Основная\' удочка будет экипирована обратно."
 
 T["Disabled.\n" .. "Needs " .. colorBlu:WrapTextInColorCode("Angleur\n") 
-.. "to function."] = "Отключено.\n" .. "Требуется " .. colorBlu:WrapTextInColorCode("Angleur\n") 
+.. "to function."] = "Отключено.\n" .. "Требуется\n" .. colorBlu:WrapTextInColorCode("Angleur\n") 
 .. "для работы."
 
 T["Remove Main Fishing Rod"] = "Убрать основную удочку"
