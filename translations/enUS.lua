@@ -5,6 +5,8 @@ local colorUnderlight = CreateColor(0.9, 0.8, 0.5)
 local colorYello = CreateColor(1.0, 0.82, 0.0)
 local colorBlu = CreateColor(0.61, 0.85, 0.92)
 local colorWhite = CreateColor(1, 1, 1)
+local colorDarkBlu = CreateColor(0.35, 0.45, 0.92)
+local colorGrae = CreateColor(0.85, 0.85, 0.85)
 
 T["\nset as Main Fishing Rod."] = "\nset as Main Fishing Rod."
 
@@ -42,3 +44,31 @@ T[colorWhite:WrapTextInColorCode("Get ") .. colorBlu:WrapTextInColorCode("Angleu
 
 T["to re-open this window."] = "to\nre-open this\nwindow."
 
+
+
+T["Angleur_Underlight Config"] = "Angleur_Underlight Config"
+T["Delve Mode"] = "Delve Mode"
+
+T["Keeps the fish form active while submerged inside " .. colorDarkBlu:WrapTextInColorCode("Underwater Delves,") 
+.. " allowing for infinite breath.\n\n" .."Won't be able to re-equip " 
+.. "\'Main\' Fishing Rod inside the delve while active."] = "Keeps the fish form active while submerged inside " 
+.. colorDarkBlu:WrapTextInColorCode("Underwater Delves,") .. " allowing for infinite breath.\n\n" 
+.."Won't be able to re-equip " .. "\'Main\' Fishing Rod inside the delve while active."
+
+T["Waterwalking"] = "Waterwalking"
+
+T["While " .. colorBlu:WrapTextInColorCode("Angleur ") .. "is " .. colorGrae:WrapTextInColorCode("Sleeping")
+.. ", won't re-equip \'Main\' Fishing Rod " .. "when you stop swimming - allowing you to waterwalk.\n\nWhen you " 
+.. colorYello:WrapTextInColorCode("wake ") .. colorBlu:WrapTextInColorCode("Angleur ") 
+.. "up, your \'Main\' Fishing Rod will be equipped back."] = "While " .. colorBlu:WrapTextInColorCode("Angleur ") .. "is " 
+.. colorGrae:WrapTextInColorCode("Sleeping") .. ", won't re-equip \'Main\' Fishing Rod " .. "when you stop swimming - allowing you to waterwalk.\n\nWhen you " 
+.. colorYello:WrapTextInColorCode("wake ") .. colorBlu:WrapTextInColorCode("Angleur ") .. "up, your \'Main\' Fishing Rod will be equipped back."
+
+T["Disabled.\n" .. "Needs " .. colorBlu:WrapTextInColorCode("Angleur\n") 
+.. "to function."] = "Disabled.\n" .. "Needs " .. colorBlu:WrapTextInColorCode("Angleur\n") 
+.. "to function."
+
+
+T["Remove Main Fishing Rod"] = "Remove Main Fishing Rod"
+
+T["Open Config"] = "Open Config"

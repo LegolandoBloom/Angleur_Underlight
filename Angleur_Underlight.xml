@@ -82,7 +82,7 @@
                     <OnClick function="AngleurUnderlight_RemoveMainRod"/>
                     <OnEnter>
                         GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, -35)
-                        GameTooltip:AddLine("Remove Main Fishing Rod")
+                        GameTooltip:AddLine(AngleurUnderlight_Translate["Remove Main Fishing Rod"])
                         GameTooltip:Show()
                     </OnEnter>
                     <OnLeave>
