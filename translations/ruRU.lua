@@ -43,35 +43,34 @@ T["Underlight Angler not found in bags. Cannot equip."] = "Удочка Темн
 
 T[colorWhite:WrapTextInColorCode("Get ") .. colorBlu:WrapTextInColorCode("Angleur ") 
 .. colorWhite:WrapTextInColorCode("for increased functionality!")] = colorWhite:WrapTextInColorCode("Получите ") .. colorBlu:WrapTextInColorCode("Angleur ") 
-.. colorWhite:WrapTextInColorCode("для расширенной Функциональ-\nности!")
+.. colorWhite:WrapTextInColorCode("для расширенной функциональ-\nности!")
 
 T["to re-open this window."] = "чтобы\nповторно открыть это окно."
 
 
 
-T["Angleur_Underlight Config"] = "Angleur_Underlight Config"
-T["Delve Mode"] = "Delve Mode"
+T["Angleur_Underlight Config"] = "Конфигурация Angleur Underlight"
+T["Delve Mode"] = "Режим Вылазок"
 
 T["Keeps the fish form active while submerged inside " .. colorDarkBlu:WrapTextInColorCode("Underwater Delves,") 
 .. " allowing for infinite breath.\n\n" .."Won't be able to re-equip " 
-.. "\'Main\' Fishing Rod inside the delve while active."] = "Keeps the fish form active while submerged inside " 
-.. colorDarkBlu:WrapTextInColorCode("Underwater Delves,") .. " allowing for infinite breath.\n\n" 
-.."Won't be able to re-equip " .. "\'Main\' Fishing Rod inside the delve while active."
+.. "\'Main\' Fishing Rod inside the delve while active."] = "Сохраняет форму рыбы активной при вылазках в " 
+.. colorDarkBlu:WrapTextInColorCode("Подводных вылазках,") .. " позволяя дышать бесконечно.\n\n" 
+.."Невозможно повторно экипировать " .. "\'Основную\' удочку внутри вылазки, пока активно."
 
-T["Waterwalking"] = "Waterwalking"
+T["Waterwalking"] = "Хождение по воде"
 
 T["While " .. colorBlu:WrapTextInColorCode("Angleur ") .. "is " .. colorGrae:WrapTextInColorCode("Sleeping")
 .. ", won't re-equip \'Main\' Fishing Rod " .. "when you stop swimming - allowing you to waterwalk.\n\nWhen you " 
 .. colorYello:WrapTextInColorCode("wake ") .. colorBlu:WrapTextInColorCode("Angleur ") 
-.. "up, your \'Main\' Fishing Rod will be equipped back."] = "While " .. colorBlu:WrapTextInColorCode("Angleur ") .. "is " 
-.. colorGrae:WrapTextInColorCode("Sleeping") .. ", won't re-equip \'Main\' Fishing Rod " .. "when you stop swimming - allowing you to waterwalk.\n\nWhen you " 
-.. colorYello:WrapTextInColorCode("wake ") .. colorBlu:WrapTextInColorCode("Angleur ") .. "up, your \'Main\' Fishing Rod will be equipped back."
+.. "up, your \'Main\' Fishing Rod will be equipped back."] = "Пока " .. colorBlu:WrapTextInColorCode("Angleur ") .. "находится в " 
+.. colorGrae:WrapTextInColorCode("спящем режиме") .. ", не будет повторно экипировать \'Основную\' удочку " .. "при прекращении плавания - позволяя ходить по воде.\n\nКогда вы " 
+.. colorYello:WrapTextInColorCode("разбудите ") .. colorBlu:WrapTextInColorCode("Angleur ") .. ", ваша \'Основная\' удочка будет экипирована обратно."
 
 T["Disabled.\n" .. "Needs " .. colorBlu:WrapTextInColorCode("Angleur\n") 
-.. "to function."] = "Disabled.\n" .. "Needs " .. colorBlu:WrapTextInColorCode("Angleur\n") 
-.. "to function."
+.. "to function."] = "Отключено.\n" .. "Требуется " .. colorBlu:WrapTextInColorCode("Angleur\n") 
+.. "для работы."
 
+T["Remove Main Fishing Rod"] = "Убрать основную удочку"
 
-T["Remove Main Fishing Rod"] = "Remove Main Fishing Rod"
-
-T["Open Config"] = "Open Config"
+T["Open Config"] = "Открыть настройки"
