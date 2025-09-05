@@ -115,7 +115,7 @@ function AngleurUnderlight_OnLoad(self)
 end
 
 function AngleurUnderlight_EventLoader(self, event, unit, ...)
-    if event == "ADDON_LOADED" then
+    if event == "ADDON_LOADED" and unit == "Angleur_Underlight" then
         AngleurUnderlight_SavedVariables()
         AngleurUnderlight_CollapseConfig.savedVarTable = AngleurUnderlightConfig
         AngleurUnderlight_CollapseConfig:Update()

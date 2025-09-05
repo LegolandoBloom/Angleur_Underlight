@@ -1,9 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-    <Script file="GeneralTemplates\GeneralTemplates.lua"/>
-    <Include file="GeneralTemplates\GeneralTemplates.xml"/>
+    <Include file="Legolando_CheckboxTemplate\Legolando_CheckboxTemplate.xml"/>
+    <Include file="Legolando_CollapseConfigTemplate\Legolando_CollapseConfigTemplate.xml"/>    
     
-    <Include file="LegolandoTemplates\embeds.xml"/>
-
 </Ui>
