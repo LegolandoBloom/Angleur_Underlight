@@ -5,7 +5,7 @@
 
     <Script file="Legolando_CollapseConfigTemplate.lua"/>
 
-    <Button name="Legolando_CollapseConfigTemplate_AngleurUnderlight" mixin="Legolando_CollapseConfigMixin_AngleurUnderlight" inherits="AngleurUnderlight_SimpleSquareButtonTemplate" virtual="true">
+    <Button name="Legolando_CollapseConfigTemplate_AngleurUnderlight" mixin="Legolando_CollapseConfigMixin_AngleurUnderlight" inherits="Legolando_SimpleSquareButtonTemplate_AngleurUnderlight" virtual="true">
         <KeyValues>
             <KeyValue key="savedVarTable" value="" type="table"/>
         </KeyValues>
