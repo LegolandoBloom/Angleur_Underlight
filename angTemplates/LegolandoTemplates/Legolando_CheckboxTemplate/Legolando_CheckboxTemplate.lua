@@ -20,7 +20,7 @@ function Legolando_CheckboxMixin_AngleurUnderlight:reposition()
 end
 
 function Legolando_CheckboxMixin_AngleurUnderlight:OnClick()
-    local grandParent = self:GetParent():GetParent()
+    local grandParent = self:GetParent()
     local teeburu = grandParent.savedVarTable
     if not self.reference then 
         print("no checkbox reference string")
@@ -38,5 +38,28 @@ function Legolando_CheckboxMixin_AngleurUnderlight:OnClick()
         teeburu[self.reference] = true
     elseif self:GetChecked() == false then
         teeburu[self.reference] = false
+    end
+end
+
+Legolando_CheckboxesMixin_AngleurUnderlight = {}
+
+function Legolando_CheckboxesMixin_AngleurUnderlight:Update()
+    local teeburu = self.savedVarTable
+    if not teeburu then
+        print("checkbox parent doesn't have a saved variable table attached")
+        return
+    end
+    local children = {self:GetChildren()}
+    for i, child in pairs(children) do
+        if child:GetObjectType() == "CheckButton" and child.reference then
+            local savedVar = teeburu[child.reference]
+            if savedVar then
+                if savedVar == true then
+                    child:SetChecked(true)
+                elseif savedVar == false then
+                    child:SetChecked(false)
+                end
+            end
+        end
     end
 end

@@ -1,7 +1,35 @@
 Legolando_CollapseConfigMixin_AngleurUnderlight = {}
 
-function Legolando_CollapseConfigMixin_AngleurUnderlight:Init()
 
+function Legolando_CollapseConfigMixin_AngleurUnderlight:Init(tabNames)
+    if tabNames and next(tabNames) ~= nil then
+        local tabs = self.popup.tabs
+        for i, name in ipairs(tabNames) do
+            tabs:AddTab(name)
+        end
+        local function tabSelectedCallback(tabID)
+            local children = {self.popup:GetChildren()}
+            for i, v in pairs(children) do
+                local id = v:GetID()
+                if id and id ~= 0 then
+                    if id == tabID then
+                        v:Show()
+                    else
+                        v:Hide()
+                    end
+                end
+            end
+            -- if tabID == 1 then
+            --     print("this is tab 1")
+            -- elseif tabID == 2 then
+            --     print("this is tab 2")
+            -- elseif tabID == 3 then
+            --     print("this is tab 3")
+            -- end
+        end
+        tabs:SetTabSelectedCallback(tabSelectedCallback)
+        tabs:SetTab(1)
+    end
 end
 
 function Legolando_CollapseConfigMixin_AngleurUnderlight:Update()

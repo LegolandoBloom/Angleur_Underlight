@@ -91,6 +91,19 @@ end
 -- local loc = ItemLocation:CreateFromBagAndSlot(1, 2)
 -- C_Item.UnlockItem(loc)
 
+local function ported_Angleur_FishingForAttentionAura()
+    if InCombatLockdown() then return end
+    local fishingAura = C_UnitAuras.GetPlayerAuraBySpellID(394009)
+    if not fishingAura then return end
+    local slots = {C_UnitAuras.GetAuraSlots("player", "HELPFUL|CANCELABLE", 20)}
+    if not slots then return end
+    for i, v in pairs(slots) do
+        local aura = C_UnitAuras.GetBuffDataByIndex("player", i)
+        if aura and aura.spellId == 394009 then 
+            CancelUnitBuff("player", i)
+        end
+    end
+end
 local equipFrame = CreateFrame("Frame")
 local erapusuThreshold = 0.3
 local erapusuCounter = 0
@@ -129,6 +142,10 @@ function AngleurUnderlight_HandleQueue()
                         if AngleurUnderlight_CheckDelve() == false then
                             Angleur_FishingForAttentionAura()
                         end
+                    end
+                else
+                    if not IsSwimming() then
+                        ported_Angleur_FishingForAttentionAura()
                     end
                 end
                 self:SetScript("OnUpdate", nil)

@@ -117,8 +117,7 @@ end
 function AngleurUnderlight_EventLoader(self, event, unit, ...)
     if event == "ADDON_LOADED" and unit == "Angleur_Underlight" then
         AngleurUnderlight_SavedVariables()
-        AngleurUnderlight_CollapseConfig.savedVarTable = AngleurUnderlightConfig
-        AngleurUnderlight_CollapseConfig:Update()
+        AngleurUnderlight_CollapseConfig_LoadSavedVars(self.collapseConfig)
     elseif event == "PLAYER_ENTERING_WORLD" then
         AngleurUnderlight_UpdateButton(self)
         if not AngleurUnderlight_FirstInstall then

@@ -1,9 +1,25 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-    <!-- REQUIRES Legolando_CheckboxTemplate TO WORK! -->
+    <!-- REQUIRES Legolando_SimpleSquareButtonTemplate TO WORK -->
 
     <Script file="Legolando_CollapseConfigTemplate.lua"/>
+
+    <!-- 
+     GUIDE: After creating the frame inheriting the template, call myFrame:Init(tabNames)
+     tabNames - indexed table of names for tabs. Pass nil if you don't want tabs.
+      example: 
+         local tabNames = {
+             [1] = "yo",
+             [2] = "ho",
+             [3] = "bo"
+         }
+    -->
+
+    <!-- 
+     GUIDE: When adding UI elements, set 'popup' as their parent. To bind UI elements to the tab system, simply set their ID to 
+     the tab you want them to be in. 
+    -->
 
     <Button name="Legolando_CollapseConfigTemplate_AngleurUnderlight" mixin="Legolando_CollapseConfigMixin_AngleurUnderlight" inherits="Legolando_SimpleSquareButtonTemplate_AngleurUnderlight" virtual="true">
         <KeyValues>
@@ -27,26 +43,23 @@
                 <Layers>
                     <Layer level="BACKGROUND">
                         <FontString parentKey="title" inherits="GameFontNormal" text="Template Title">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" x="18" y="-19"/>
-                        </Anchors>
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="18" y="-19"/>
+                            </Anchors>
                         </FontString>
                     </Layer>
                 </Layers>
                 <Frames>
-                    <Frame parentKey="Border" inherits="SecureDialogBorderTemplate"/>
-                    <CheckButton parentKey="checkbox1" inherits="Legolando_CheckboxTemplate_AngleurUnderlight">
-                        <Size x="26" y="26"/>
+                    <Frame name="$parent_Tabs" parentKey="tabs" inherits="TabSystemTemplate">    
+                        <Size x="1" y="1"/>
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.title" relativePoint="BOTTOMLEFT" x="8" y="-5"/>
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="BOTTOMLEFT" x="8" y="6"/>
                         </Anchors>
-                    </CheckButton>
-                    <CheckButton parentKey="checkbox2" inherits="Legolando_CheckboxTemplate_AngleurUnderlight">
-                        <Size x="26" y="26"/>
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.title" relativePoint="BOTTOMLEFT" x="8" y="-29"/>
-                        </Anchors>
-                    </CheckButton>
+                        <KeyValues>
+                            <KeyValue key="spacing" value="0.1" type="number"/>
+                        </KeyValues>
+                    </Frame>
+                    <Frame parentKey="Border" inherits="SecureDialogBorderTemplate"/>                   
                     <Button parentKey="$parent.CloseButton" inherits="UIPanelCloseButton">
                         <Anchors>
                             <Anchor point="TOPRIGHT" x="-2" y="-2"/>
