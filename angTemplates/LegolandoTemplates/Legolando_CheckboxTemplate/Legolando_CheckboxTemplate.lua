@@ -40,7 +40,7 @@ function Legolando_CheckboxMixin_AngleurUnderlight:OnClick()
         teeburu[self.reference] = false
     end
     if self.onClickCallback then
-        self.onClickCallback()
+        self.onClickCallback(self, self:GetChecked())
     end
 end
 
