@@ -152,7 +152,7 @@
             <Frame name="$parent_Popup" parentKey="popup" toplevel="true" hidden="true" enableMouse="true">
                 <Size x="300" y="150"/>
                 <Anchors>
-                    <Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="0" y="0"/>
+                    <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPRIGHT" x="0" y="0"/>
                 </Anchors>
                 <Layers>
                     <Layer level="BACKGROUND">
