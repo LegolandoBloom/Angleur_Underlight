@@ -1,8 +1,8 @@
-Legolando_CheckboxMixin_AngleurUnderlight = {};
+Legolando_CheckboxFrameMixin_AngleurUnderlight = {};
 
-function Legolando_CheckboxMixin_AngleurUnderlight:greyOut()
-    self:SetChecked(false)
-    self:Disable()
+function Legolando_CheckboxFrameMixin_AngleurUnderlight:greyOut()
+    self.checkbox:SetChecked(false)
+    self.checkbox:Disable()
     self.text:SetTextColor(0.9, 0.9, 0.9)
     self.disabledText:Show()
     if self.dropDown then
@@ -10,19 +10,13 @@ function Legolando_CheckboxMixin_AngleurUnderlight:greyOut()
     end
 end
 
-function Legolando_CheckboxMixin_AngleurUnderlight:reposition()
-    local width, height = self.text:GetSize()
-    self.text:ClearAllPoints()
-    self.text:SetPoint("RIGHT", self, "LEFT")
-    self.disabledText:SetPoint("LEFT", self, "RIGHT")
-    local _, _, _, offsetX, offsetY = self:GetPoint()
-    self:AdjustPointsOffset(width, 0)
-end
+Legolando_CheckboxMixin_AngleurUnderlight = {}
 
 function Legolando_CheckboxMixin_AngleurUnderlight:OnClick()
-    local grandParent = self:GetParent()
+    local parent = self:GetParent()
+    local grandParent = parent:GetParent()
     local teeburu = grandParent.savedVarTable
-    if not self.reference then 
+    if not parent.reference then 
         print("no checkbox reference string")
         return
     end
@@ -30,17 +24,17 @@ function Legolando_CheckboxMixin_AngleurUnderlight:OnClick()
         print("no saved variable table attached")
         return 
     end
-    if teeburu[self.reference] == nil then
+    if teeburu[parent.reference] == nil then
         print("checkbox reference not found in saved variable table")
         return
     end
     if self:GetChecked() then
-        teeburu[self.reference] = true
+        teeburu[parent.reference] = true
     elseif self:GetChecked() == false then
-        teeburu[self.reference] = false
+        teeburu[parent.reference] = false
     end
-    if self.onClickCallback then
-        self.onClickCallback(self, self:GetChecked())
+    if parent.onClickCallback then
+        parent.onClickCallback(self, self:GetChecked())
     end
 end
 
@@ -54,13 +48,13 @@ function Legolando_CheckboxesMixin_AngleurUnderlight:Update()
     end
     local children = {self:GetChildren()}
     for i, child in pairs(children) do
-        if child:GetObjectType() == "CheckButton" and child.reference then
+        if child.checkbox and child.reference then
             local savedVar = teeburu[child.reference]
             if savedVar then
                 if savedVar == true then
-                    child:SetChecked(true)
+                    child.checkbox:SetChecked(true)
                 elseif savedVar == false then
-                    child:SetChecked(false)
+                    child.checkbox:SetChecked(false)
                 end
             end
         end
